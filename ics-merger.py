@@ -1,7 +1,10 @@
 import tkinter as tk
 from tkinter import filedialog
+from tkinter import messagebox
 import os
 import glob
+
+PROGRAM_NAME = "ICS Merger for Import"
 
 def merge_ics_files():
     # Set up the root tkinter window
@@ -11,7 +14,8 @@ def merge_ics_files():
     # Open the folder select dialog
     folder_path = filedialog.askdirectory()
     if not folder_path:
-        return "No folder selected."
+        messagebox.showinfo(PROGRAM_NAME, "No folder selected.")
+        return None
 
     # Find all ICS files in the folder
     ics_files = glob.glob(os.path.join(folder_path, '*.ics'))
@@ -40,7 +44,10 @@ def merge_ics_files():
     with open(merged_file_path, 'w') as merged_file:
         merged_file.write(merged_content)
 
-    return f"Merged ICS file created: {merged_file_path}"
+    # Show a message box with the path to the merged file
+    messagebox.showinfo(PROGRAM_NAME, f"Merged ICS file created: {merged_file_path}")    
+
+    return merged_file_path
 
 # Run the function
 merge_ics_files()
